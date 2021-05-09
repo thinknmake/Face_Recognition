@@ -1,0 +1,6 @@
+sudo apt-get install python3-opencv
+sudo apt-get install cmake
+pip3 install face_recognition
+pip3 install sklearn
+pip3 install gtts
+
