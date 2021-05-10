@@ -19,11 +19,12 @@ def read_video(q_out):
     num_frames=0
     c_image_path=""
     while True:
-        start = time.time()
-        num_frames=num_frames+1
+        
+        if num_frames == 0:
+            start = time.time()
         ret, frame = camera.read()
-
-        if num_frames > 9:
+        num_frames=num_frames+1
+        if num_frames > 20:
             end = time.time()
             seconds = end - start
             #print ("Time taken : {0} seconds".format(seconds))
@@ -34,8 +35,9 @@ def read_video(q_out):
             c_image_path = os.path.join("cv_img", c_image)
             cv2.imwrite(c_image_path,frame)
             q_out.put(c_image_path)
-
-        cv2.imshow("Video",frame)
+        
+        #time.sleep(0.3)
+        #cv2.imshow("Video",frame)
         cv2.waitKey(1)
 
 # Create the shared queue and launch both threads

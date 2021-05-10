@@ -17,7 +17,6 @@ import csv_update
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 TRAINDATA = "Data_Base"
-#camera = cv2.VideoCapture(0)
 
 def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree', verbose=False):
 
@@ -132,7 +131,7 @@ def to_str(bytes_or_str):
 def train_data():
     start = time.time()
     print("Training KNN classifier...")
-    classifier = train(TRAINDATA, model_save_path="trained_knn_model.clf", n_neighbors=2)
+    classifier = train(TRAINDATA, model_save_path="./trained_knn_model.clf", n_neighbors=2)
     done = time.time()
     elapsed = done - start
     print("Time Taken: %0.2f Sec" % elapsed)
@@ -144,19 +143,14 @@ def fdetect(c_image_path):
     pname="Unknown"
     o_image="procesed_image.png"
     s_image="send_image.png"
-    #print ("Detecting Face")    
-
+    
     o_image_path = os.path.join("cv_img", o_image)
     s_image_path = os.path.join("cv_img", s_image)
 
-    #predictions = predict(c_image_path, model_path="/home/pi/Project/trained_knn_model.clf")
     start = time.time()
-    predictions = predict(c_image_path, model_path="trained_knn_model.clf")
+    predictions = predict(c_image_path, model_path="./trained_knn_model.clf")
     end = time.time()
     seconds = end - start
-    #ty_res = time.gmtime(seconds)
-    #res = time.strftime("%H:%M:%S",ty_res)
-    #print(res)
     #print ("Detecting Face Time taken : {0} seconds".format(seconds))
     frame = cv2.imread(c_image_path)
     now = datetime.now()
@@ -179,9 +173,9 @@ def fdetect(c_image_path):
         font = cv2.FONT_HERSHEY_DUPLEX         
         cv2.putText(frame, name, (left, top - 6), font, 1.0, (255, 255, 255), 2,1)
         img=frame
-        sub_face = img[top-100:bottom+100, left-100:right+100]
-        if(sub_face is not None):
-            cv2.imwrite(s_image_path,sub_face)
+        #sub_face = img[top-100:bottom+100, left-100:right+100]
+        #if(sub_face is not None):
+        #    cv2.imwrite(s_image_path,sub_face)
 
     cv2.imwrite(o_image_path,frame)
     return found_list
